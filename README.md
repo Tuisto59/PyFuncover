@@ -17,7 +17,7 @@ Python Function Uncover ( PyFuncover ) is a new bioinformatic tool able to searc
 
 # Software
 
-NCBI-BLAST+
+ *  NCBI-BLAST+
 
 # Usage
 
