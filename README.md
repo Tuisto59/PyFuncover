@@ -8,22 +8,24 @@ Python Function Uncover ( PyFuncover ) is a new bioinformatic tool able to searc
 Windows
 Unix
 
-#Library
+# Library
 
 Numpy
 Pandas
 BioPython
 Matplotlib
 
-#Software
+# Software
 
 NCBI-BLAST+
 
-TO UPDATE THE DATABASES :
+# Usage
+
+## TO UPDATE THE DATABASES :
 
 python PyFuncover.py --update
 
-=== OBLIGATORY ARGUMENTS : ===
+## === OBLIGATORY ARGUMENTS : ===
 
 -pfam : List of PFAM familly ID : PF####
   each separated by a blank space
@@ -40,7 +42,7 @@ Can be a Taxid that represent a node in the phylogenetic tree
 (Eukaryotes : 2759 ; Insecta : 50557, ...)
 He will retrieve all availlable assembly for them
 
-=== OPTIONAL : ===
+## === OPTIONAL : ===
 
 --update :
 Download the last release of the NCBI Taxonomic Database
@@ -55,9 +57,9 @@ Default : result.csv
 --db : The list of choosen database number to retrieve data from bioDBnet :
   default : 45 46 47 (GO-TERMs Databases)
 
-  1 : Affy ID
-  2 : Agilent ID
-  3 : Allergome Code
+  1. : Affy ID
+  2. : Agilent ID
+  3. : Allergome Code
   4 : ApiDB_CryptoDB ID
   5 : Biocarta Pathway Name
   6 : BioCyc ID
