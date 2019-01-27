@@ -7,6 +7,10 @@ Python Function Uncover ( PyFuncover ) is a new bioinformatic tool able to searc
 # Workflow
 ![alt text](https://github.com/Tuisto59/PyFuncover/blob/master/image2.png "Workflow")
 
+# Result
+
+![alt text](https://github.com/Tuisto59/PyFuncover/blob/master/image1.png "Workflow")
+
 # OS
   * Windows
   * Unix
