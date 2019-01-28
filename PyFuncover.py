@@ -790,6 +790,7 @@ def main():
 
     USAGE :
         python PyFuncover.py -taxid [TAXID ...] -pfam [PFAM ...] --db [DB ...] --out [OUT]
+        python PyFuncover.py --update
 
     TO UPDATE THE DATABASES :
 
@@ -800,13 +801,13 @@ def main():
     -pfam : List of PFAM familly ID : PF####
             each separated by a blank space
 
-        PyFuncover.py --pfam PF14651 PF#### ...
+        PyFuncover.py -pfam PF14651 PF#### ...
         
 
     -taxid: The list of TaxID for each organism you want to download a proteome
         Each separated by a space (for example Human and Yeast taxid)
 
-            PyFuncover.py --taxid 9606 559492
+            PyFuncover.py -taxid 9606 559492
 
         Can be a Taxid that represent a node in the phylogenetic tree
         (Eukaryotes : 2759 ; Insecta : 50557, ...)
