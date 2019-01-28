@@ -805,9 +805,9 @@ def main():
         
 
     -taxid: The list of TaxID for each organism you want to download a proteome
-        Each separated by a space (for example Human and Yeast taxid)
+        Each separated by a space (for example Human and Yeast (S299C) taxid)
 
-            PyFuncover.py -taxid 9606 559492
+            PyFuncover.py -taxid 9606 559292
 
         Can be a Taxid that represent a node in the phylogenetic tree
         (Eukaryotes : 2759 ; Insecta : 50557, ...)
