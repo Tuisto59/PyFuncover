@@ -15,6 +15,9 @@ Python Function Uncover ( PyFuncover ) is a new bioinformatic tool able to searc
   * Windows
   * Unix
 
+# Python
+  * Python 2.7+
+
 # Library
 
   * Numpy
