@@ -990,7 +990,7 @@ def main():
                         type=int,
                         help='bioDBnet Databases Number: (default : 45 46 47 (GO-TERMs Databases))')
     parser.add_argument('--out', nargs='*', help='File output, default "result.csv"')
-    parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly')
+    parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true')
     args = parser.parse_args()
     dicoArgs = vars(args)
     print(dicoArgs)
