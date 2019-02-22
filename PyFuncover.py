@@ -403,23 +403,24 @@ def bioDBnet_database(id_list):
         135 : 'TubercuList ID',
         136 : 'UCSC ID',
         137 : 'UniGene ID',
-        138 : 'UniProt Entry Name',
-        139 : 'UniProt Info',
-        140 : 'UniProt Protein Name',
-        141 : 'UniSTS ID',
-        142 : 'VectorBase Gene ID',
-        143 : 'VEGA Gene ID',
-        144 : 'VEGA Protein ID',
-        145 : 'VEGA Transcript ID',
-        146 : 'WormBase Gene ID',
-        147 : 'WormPep Protein ID',
-        148 : 'XenBase Gene ID',
-        149 : 'ZFIN ID',
+        138 : 'UniProt Accession',
+        139 : 'UniProt Entry Name',
+        140 : 'UniProt Info',
+        141 : 'UniProt Protein Name',
+        142 : 'UniSTS ID',
+        143 : 'VectorBase Gene ID',
+        144 : 'VEGA Gene ID',
+        145 : 'VEGA Protein ID',
+        146 : 'VEGA Transcript ID',
+        147 : 'WormBase Gene ID',
+        148 : 'WormPep Protein ID',
+        149 : 'XenBase Gene ID',
+        150 : 'ZFIN ID',
     }
     if id_list:
         return [data[i] for i in id_list]
     else:
-        return ['GO - Biological Process','GO - Cellular Component','GO - Molecular Function']
+        return ['UniProt Accession', 'GO - Biological Process', 'GO - Cellular Component', 'GO - Molecular Function']
     
 def bioDBnet_request(l, headers, params, taxid=False):
     """
@@ -826,7 +827,7 @@ def main():
         Default : result.csv
 
     --db : The list of choosen database number to retrieve data from bioDBnet :
-            default : 45 46 47 (GO-TERMs Databases)
+            default : 137 45 46 47 (UNIPROT ID, GO-TERMs Databases)
 
             1 : Affy ID
             2 : Agilent ID
@@ -965,18 +966,19 @@ def main():
             135 : TubercuList ID
             136 : UCSC ID
             137 : UniGene ID
-            138 : UniProt Entry Name
-            139 : UniProt Info
-            140 : UniProt Protein Name
-            141 : UniSTS ID
-            142 : VectorBase Gene ID
-            143 : VEGA Gene ID
-            144 : VEGA Protein ID
-            145 : VEGA Transcript ID
-            146 : WormBase Gene ID
-            147 : WormPep Protein ID
-            148 : XenBase Gene ID
-            149 : ZFIN ID
+            138 : UniProt Accession
+            139 : UniProt Entry Name
+            140 : UniProt Info
+            141 : UniProt Protein Name
+            142 : UniSTS ID
+            143 : VectorBase Gene ID
+            144 : VEGA Gene ID
+            145 : VEGA Protein ID
+            146 : VEGA Transcript ID
+            147 : WormBase Gene ID
+            148 : WormPep Protein ID
+            149 : XenBase Gene ID
+            150 : ZFIN ID
 
     '''))
     parser.add_argument('-pfam',
@@ -990,7 +992,7 @@ def main():
                         type=int,
                         help='bioDBnet Databases Number: (default : 45 46 47 (GO-TERMs Databases))')
     parser.add_argument('--out', nargs='*', help='File output, default "result.csv"')
-    parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true')
+    parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true', default=False)
     args = parser.parse_args()
     dicoArgs = vars(args)
     print(dicoArgs)
@@ -1003,7 +1005,9 @@ def main():
 python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
         exit()
 
-    if dicoArgs['update'] is not None:
+    if dicoArgs['update']:
+        print(dicoArgs['update'])
+        print("here")
         print('Updating Taxonomic NCBI Databases and the Prokaryote, Eukaryote & RefSeq genome assembly')
         init()
         exit()
