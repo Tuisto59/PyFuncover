@@ -64,6 +64,10 @@ PyFuncover.py --update
 Format are in CSV format (pandas.to_csv output)
 Default : result.csv
 
+--nb : The number of parrallelized BLAST process (default : 10)
+    Be carefull, high number will use lot of memory and create a stck overflow !
+
+
 --db : The list of choosen database number to retrieve data from bioDBnet :
   default : 45 46 47 (GO-TERMs Databases)
 
