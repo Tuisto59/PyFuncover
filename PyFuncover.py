@@ -76,12 +76,13 @@ def init():
         urllib.urlretrieve("ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz", os.getcwd()+"/TAXONOMY/taxdump.tar.gz")
     urllib.urlcleanup()
 
-    print('Prepare Database...')
+    print('Extracting Database...')
     tfile = tarfile.open(os.getcwd()+"/TAXONOMY/taxdump.tar.gz", 'r:gz')
     tfile.extract("nodes.dmp",os.getcwd()+"/TAXONOMY/.")
     tfile.extract("names.dmp",os.getcwd()+"/TAXONOMY/.")
     tfile.close()
     os.remove(os.getcwd()+"/TAXONOMY/taxdump.tar.gz")
+    print('Finish ! Exit')
 
 def dic_Name():
     """
@@ -208,7 +209,7 @@ def uniprot2ncbi_accession(l):
     lol_accession = list(chunks(list(l),250))
     cpt = 1
     for l in lol_accession:
-        print(cpt,len(lol_accession))
+        print("/".join([str(cpt),str(len(lol_accession))])+" (250 items)")
         cpt += 1
         json_data = bioDBnet_request(l, headers, params)
         for i in json_data:
@@ -249,7 +250,7 @@ def get_biodbnet_data(l,db):
     lol_accession = list(chunks(list(l),250))
     cpt = 1
     for l in lol_accession:
-        print(cpt,len(lol_accession))
+        print("/".join([str(cpt),str(len(lol_accession))])+" (250 items)")
         cpt += 1
         json_data = bioDBnet_request(l, headers, params)
         for i in json_data:
@@ -496,7 +497,7 @@ def download_pfam(PFAMS):
             accession_PFAM_NCBI = set([record.id.split('/')[0] for record in SeqIO.parse(filename_NCBI,'fasta')])
             accession_PFAM_UNIPROT = set([record.id.split('/')[0] for record in SeqIO.parse(filename_UNIPROT,'fasta')])
             #convert the UNIPROT to NCBI accession
-            print('Convert UNIPROT to NCBI accessions')
+            print('Convert the UNIPROT accession from the PFAM UNIPROT MSA to NCBI accessions')
             dico_uniprot_to_genbank = uniprot2ncbi_accession(accession_PFAM_UNIPROT)
 
             #check if UNIPROT = NCBI accesion inside the PFAM of NCBI
@@ -562,7 +563,7 @@ def acc_to_ftp_path(acc):
         raise ValueError("could not get FTP path from ".format(acc))
 
 
-def get_files_from_types(types, base_name, ftp, path):
+def get_files_from_types(types, base_name, ftp, path, ftp_true=False):
     """
     from https://github.com/ctSkennerton/scriptShed/blob/master/download_ncbi_assembly.py
 
@@ -578,24 +579,53 @@ def get_files_from_types(types, base_name, ftp, path):
     """
     
     out = str()
-    for g in ftp.nlst():
-        for t in types:
-            if g == base_name + t:
+    if ftp_true:
 
-                #download
-                print("ftp://ftp.ncbi.nlm.nih.gov/{}/{}".format(ftp.pwd(), g))
-                urllib.urlretrieve("ftp://ftp.ncbi.nlm.nih.gov/{}/{}".format(ftp.pwd(), g), path+g)
-                urllib.urlcleanup()
+        #download
+        for t in types:
+            f = path+base_name+types[0]
+            try:
+                urllib.urlretrieve(ftp_true+'/'+base_name+t, f)
+            except IOError:
+                print('No proteomic file availlable for : {}'.format(base_name))
+                return False
                     
-                #extract
-                with gzip.open(path+g, 'rb') as f_in:
-                    out = path+g.replace('.gz','')
-                    with open(out, 'wb') as f_out:
-                        shutil.copyfileobj(f_in, f_out)
+            urllib.urlcleanup()
+                
+            #extract
+            with gzip.open(f, 'rb') as f_in:
+                out = f.replace('.gz','')
+                with open(out, 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+                    
+            #remove file
+            os.remove(f)
+            return out
+    
+    else:
+        
+        for g in ftp.nlst():
+            for t in types:
+                
+                if g == base_name + t:
+
+                    #download
+                    try:
+                        urllib.urlretrieve("ftp://ftp.ncbi.nlm.nih.gov/{}/{}".format(ftp.pwd(), g), path+g)
+                    except IOError:
+                        print('No proteomic file availlable for : {}'.format(g))
+                        return False
+                    urllib.urlcleanup()
                         
-                #remove file
-                os.remove(path+g)
-    return out
+                    #extract
+                    with gzip.open(path+g, 'rb') as f_in:
+                        out = path+g.replace('.gz','')
+                        with open(out, 'wb') as f_out:
+                            shutil.copyfileobj(f_in, f_out)
+                            
+                    #remove file
+                    os.remove(path+g)
+        return out
 
 def map_types_to_file_suffix(types):
     """
@@ -631,8 +661,11 @@ def download_genome(taxid, df_refseq, df_euk, df_prok):
     """
     #get the taxid in the refseq genomes
     set1 = set(taxid)
+    #get the reference genome by the given taxid
     df_selection  = df_refseq.loc[df_refseq['taxid'].isin(taxid)]
+    #convert the taxid into a set (can be have more than 1 assembly in ref seq for 1 taxid)
     set2 = set(df_selection['taxid'].values.tolist())
+    #check if all the given taxid are in the refseq genome taxid
     diff = set1.difference(set2)
 
     PATH_LIST = list()
@@ -666,20 +699,23 @@ def download_genome(taxid, df_refseq, df_euk, df_prok):
             #remove file
             os.remove(f2)
             
-    #if df dont have all taxid
+    #if df_selection dont have all taxid
     if diff:
         GCA_list = list()
         org_list = list()
+        ftp_list = list()
         df_selection_euk  = df_euk.loc[df_euk['TaxID'].isin(diff)]
+        #eukaryotes.txt dont have same header as the prokaryote.txt, prokaryote have 'Strain', 'Pubmed ID', 'FTP Path', 'Reference' in more
         if not df_selection_euk.empty :
             GCA_list += df_selection_euk['Assembly Accession'].values.tolist()
             org_list += df_selection_euk['#Organism/Name'].values.tolist()
-            
+            ftp_list += [False] * len(df_selection_euk.index)
         df_selection_prok = df_prok.loc[df_prok['TaxID'].isin(diff)]
         if not df_selection_prok.empty :
             GCA_list += df_selection_prok['Assembly Accession'].values.tolist()
             org_list += df_selection_prok['#Organism/Name'].values.tolist()
-        GCA_ORG_list = zip(GCA_list, org_list)
+            ftp_list += df_selection_prok['FTP Path'].values.tolist()
+        GCA_ORG_list = zip(GCA_list, org_list, ftp_list)
 
         if GCA_ORG_list:
             #from : https://github.com/ctSkennerton/scriptShed/blob/master/download_ncbi_assembly.py
@@ -689,21 +725,21 @@ def download_genome(taxid, df_refseq, df_euk, df_prok):
             ftp.connect('ftp.ncbi.nlm.nih.gov')
             ftp.login(user='anonymous',passwd='your.email@gmail.com')
             
-            for accession, organism in GCA_ORG_list:
-                print(organism)
+            for accession, organism, ftp_true in GCA_ORG_list:
                 #create folder
-                if os.path.isdir(os.getcwd()+"/"+organism.upper().replace(' ','_')) == False:
-                    os.mkdir(os.getcwd()+"/"+organism.upper().replace(' ','_'))
-                    
                 path = os.path.join(os.getcwd(),organism.upper().replace(' ','_'),'')
+                if os.path.isdir(path) == False:
+                    os.mkdir(path)
+                    
                 prefix, accp, version = acc_to_ftp_path(accession)
                 base_path = "genomes/all/{}/{}".format(prefix,accp)
                 ftp.cwd(base_path)
                 for f in ftp.nlst():
                     if accession in f:
                         ftp.cwd(f)
-                        out = get_files_from_types(types, f, ftp, path)
-                        PATH_LIST += [out]
+                        out = get_files_from_types(types, f, ftp, path, ftp_true=ftp_true)
+                        if out:
+                            PATH_LIST += [out]
                 ftp.cwd("/")
         else:
             print('No proteome found for the choosen node or taxid, abort')
@@ -752,21 +788,24 @@ def blast(FASTA, PFAM, OUT):
     OUT = Output blast repport in XML format (outfmt = 5)
     """
     size = False
+    cpt = 0
     while size == False:
-        #check if file exist
-        if os.path.isfile(OUT):
-            #check if fil is not empty
-            if os.stat(OUT).st_size != 0:
-                break
-            #make the BLAST Command line
-            else:
-                blastp_cline = NcbiblastpCommandline(query=FASTA, db=PFAM, evalue=10000,outfmt=5, out=OUT)
-                cmd = str(blastp_cline)
-                if FLAG:
-                    CREATE_NO_WINDOW = 0x08000000
-                    a = subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-                else:
-                    a = subprocess.call(cmd, shell=True)
+        blastp_cline = NcbiblastpCommandline(query=FASTA, db=PFAM, evalue=10000,outfmt=5, out=OUT)
+        cmd = str(blastp_cline)
+        if FLAG:
+            CREATE_NO_WINDOW = 0x08000000
+            a = subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        else:
+            a = subprocess.call(cmd, shell=True)
+
+        #check the size
+        #if the file size is not correct the while loop will continue
+        if os.stat(OUT).st_size != 0:
+            break
+        cpt +=1
+        if cpt == 100:
+            print('Trying 100 iteration, not working, exit for '+FATSA)
+            
 
     
 ###########
@@ -980,6 +1019,9 @@ def main():
             149 : XenBase Gene ID
             150 : ZFIN ID
 
+    --nb : The number of parrallelized BLAST process (default : 10)
+    Be carefull, high number will use lot of memory and create a stck overflow !
+
     '''))
     parser.add_argument('-pfam',
                         nargs='*',
@@ -993,9 +1035,10 @@ def main():
                         help='bioDBnet Databases Number: (default : 45 46 47 (GO-TERMs Databases))')
     parser.add_argument('--out', nargs='*', help='File output, default "result.csv"')
     parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true', default=False)
+    parser.add_argument('--nb',help='Number of parrallelized BLAST processes', type=int)
     args = parser.parse_args()
     dicoArgs = vars(args)
-    print(dicoArgs)
+    #print(dicoArgs)
 
 
     if not len(sys.argv) > 1:
@@ -1037,6 +1080,11 @@ python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
         output = 'results.csv'
     else:
         output = dicoArgs['db']
+
+    if dicoArgs['nb'] is None:
+        NB_BLAST_PROCESS = 10
+    else:
+        NB_BLAST_PROCESS = dicoArgs['nb']
 
     if os.path.isdir(os.path.join(os.getcwd(),'TAXONOMY')) == False:
         print("Download the reference genome list")
@@ -1105,13 +1153,13 @@ python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
             if os.path.isdir(xml_folder) == False:
                 os.mkdir(xml_folder)
 
-            n = 10
+            n = NB_BLAST_PROCESS
             PATH_FASTA_CHUNKED = list(chunks(PATH_FASTA, n))
             cpt = 1
             print('BLAST on {} - {}'.format(species_folder,fasta_assembly_folder))
             for FASTA_LIST in PATH_FASTA_CHUNKED:
                 thr_list = list()
-                print('{}/{} paquets de {} : starting'.format(cpt,len(PATH_FASTA_CHUNKED),n))
+                print('{}/{} ({} items) : starting'.format(cpt,len(PATH_FASTA_CHUNKED),n))
                 
                 for FASTA in FASTA_LIST:
                     fasta_file = os.path.split(FASTA)[-1].replace('fasta','xml')
