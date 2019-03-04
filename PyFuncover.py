@@ -6,6 +6,12 @@
 ###########
 
 from __future__ import division
+import os
+#in case if using in a server
+import matplotlib
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    matplotlib.use('Agg')
 import argparse
 from Bio import SearchIO, SeqIO
 from Bio.Blast.Applications import NcbiblastpCommandline
@@ -16,7 +22,6 @@ import json
 import matplotlib.pyplot as plt
 from matplotlib import cm, colors
 import numpy as np
-import os
 import pandas as pd
 import re
 import requests
@@ -1159,7 +1164,7 @@ python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
             print('BLAST on {} - {}'.format(species_folder,fasta_assembly_folder))
             for FASTA_LIST in PATH_FASTA_CHUNKED:
                 thr_list = list()
-                print('{}/{} ({} items) : starting'.format(cpt,len(PATH_FASTA_CHUNKED),n))
+                print('{}/{} ({} running BLASTs) : starting'.format(cpt,len(PATH_FASTA_CHUNKED),n))
                 
                 for FASTA in FASTA_LIST:
                     fasta_file = os.path.split(FASTA)[-1].replace('fasta','xml')
