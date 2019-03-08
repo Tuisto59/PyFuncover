@@ -72,7 +72,7 @@ Be carefull, high number will use lot of memory and create a stck overflow !
 
     WARNING ! : Too high number of requested cross-refs will occur a slow-mode request 1 by 1.
                 If it get an error for 1 request with 1 protein in the mode 1 by 1,
-                the program will ABORT with a too high number of choosen cross-ref choosen exception !
+                the program will ABORT with a too high number of choosen cross-ref exception !
 
 --nb-prot : The number of protein per request to the bioDBnet Database:
 
