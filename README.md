@@ -64,11 +64,21 @@ PyFuncover.py --update
 Format are in CSV format (pandas.to_csv output)
 Default : result.csv
 
---nb : The number of parrallelized BLAST process (default : 10)
+--nb-blast : The number of parrallelized BLAST process (default : 10)
 Be carefull, high number will use lot of memory and create a stck overflow !
 
---db : The list of choosen database number to retrieve data from bioDBnet :
-default : 45 46 47 (GO-TERMs Databases)
+--db : The list of choosen cross-ref number to retrieve data from bioDBnet database :
+        default : 137 45 46 47 (UNIPROT ID, GO-TERMs Databases)
+
+    WARNING ! : Too high number of requested cross-refs will occur a slow-mode request 1 by 1.
+                If it get an error for 1 request with 1 protein in the mode 1 by 1,
+                the program will ABORT with a too high number of choosen cross-ref choosen exception !
+
+--nb-prot : The number of protein per request to the bioDBnet Database:
+
+    WARNING ! : Too high number of requested cross-refs will occur a slow-mode request 1 by 1.
+                If it throw an error for 1 request in this mode, the program will ABORT with a
+                too high number of cross ref choosen exception !
 
   1. : Affy ID
   2.. : Agilent ID
