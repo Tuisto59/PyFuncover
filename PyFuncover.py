@@ -1080,8 +1080,8 @@ def main():
                         help='bioDBnet Databases Number: (default : 45 46 47 (GO-TERMs Databases))')
     parser.add_argument('--out', nargs='*', help='File output, default "result.csv"')
     parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true', default=False)
-    parser.add_argument('--nb-blast',help='Number of parrallelized BLAST processes', type=int)
-    parser.add_argument('--nb-prot',help='Number of protein per request to the bioDBnet Database', type=int)
+    parser.add_argument('--nbblast',help='Number of parrallelized BLAST processes', type=int)
+    parser.add_argument('--nbprot',help='Number of protein per request to the bioDBnet Database', type=int)
     args = parser.parse_args()
     dicoArgs = vars(args)
     #print(dicoArgs)
@@ -1127,15 +1127,15 @@ python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
     else:
         output = dicoArgs['db']
 
-    if dicoArgs['nb-blast'] is None:
+    if dicoArgs['nbblast'] is None:
         NB_BLAST_PROCESS = 10
     else:
-        NB_BLAST_PROCESS = dicoArgs['nb-blast']
+        NB_BLAST_PROCESS = dicoArgs['nbblast']
 
-    if dicoArgs['nb-prot'] is None:
+    if dicoArgs['nbprot'] is None:
         NB_PROT_DB = 250
     else:
-        NB_PROT_DB = dicoArgs['nb-prot']
+        NB_PROT_DB = dicoArgs['nbprot']
         
     if os.path.isdir(os.path.join(os.getcwd(),'TAXONOMY')) == False:
         print("Download the reference genome list")
