@@ -224,10 +224,11 @@ def uniprot2ncbi_accession(l):
                 dico_data[uniprot] = genbank
     return dico_data
 
-def get_biodbnet_data(l,db):
+def get_biodbnet_data(l,db,NB_PROT_DB):
     """
-    l : liste of NCBI ref Seq Accessions
-    db : list of output db
+    l : <list> liste of NCBI ref Seq Accessions
+    db : <list> list of output db
+    NB_PROT_DB : <int> Number of protein for each requests
     """
     dico_data = dict()
     
@@ -252,10 +253,10 @@ def get_biodbnet_data(l,db):
     }
 
 
-    lol_accession = list(chunks(list(l),250))
+    lol_accession = list(chunks(list(l),NB_PROT_DB))
     cpt = 1
     for l in lol_accession:
-        print("/".join([str(cpt),str(len(lol_accession))])+" (250 items)")
+        print("/".join([str(cpt),str(len(lol_accession))])+" ({} items)".format(NB_PROT_DB))
         cpt += 1
         json_data = bioDBnet_request(l, headers, params)
         for i in json_data:
@@ -445,8 +446,37 @@ def bioDBnet_request(l, headers, params, taxid=False):
     if taxid:
         params['taxonId'] = taxid
     r = requests.get('https://biodbnet-abcc.ncifcrf.gov/webServices/rest.php/biodbnetRestApi.json', headers=headers, params=params)
-    json_data = json.loads(r.text)
-    return json_data
+    try:
+        json_data = json.loads(r.text)
+        return json_data
+    except:
+        print('ERROR ! :')
+        print('Response statue')
+        print(r)
+        print('Response content')
+        print(r.text)
+        print('Make the request one by one')
+
+        json_data_list = list()
+        for a in l:
+            print('{}/{}'.format(l.index(a),len(l)))
+            params['inputValues'] = a
+            r = requests.get('https://biodbnet-abcc.ncifcrf.gov/webServices/rest.php/biodbnetRestApi.json', headers=headers, params=params)
+            try:
+                json_data = json.loads(r.text)
+                json_data_list += json_data
+            except:
+                print('ERROR ! :')
+                print('Response statue')
+                print(r)
+                print('Response content')
+                print(r.text)
+                print('TOO MANY CROSS6REF EXCEPTION :\nThe reccord : {} failed ! Try a smaller number of cross-refs'.format(a))
+                print('JOB ABORTED ! Sorry...')
+                exit()
+        return json_data_list
+            
+            
 
     
 def download_pfam(PFAMS):
@@ -809,7 +839,7 @@ def blast(FASTA, PFAM, OUT):
             break
         cpt +=1
         if cpt == 100:
-            print('Trying 100 iteration, not working, exit for '+FATSA)
+            print('Trying 100 iteration, not working, exit for '+FASTA)
             
 
     
@@ -870,8 +900,12 @@ def main():
         Format are in CSV format (pandas.to_csv output)
         Default : result.csv
 
-    --db : The list of choosen database number to retrieve data from bioDBnet :
+    --db : The list of choosen cross-ref number to retrieve data from bioDBnet database :
             default : 137 45 46 47 (UNIPROT ID, GO-TERMs Databases)
+
+            WARNING ! : Too high number of requested cross-refs will occur a slow-mode request 1 by 1.
+                        If it get an error for 1 request with 1 protein in the mode 1 by 1,
+                        the program will ABORT with a too high number of choosen cross-ref choosen exception !
 
             1 : Affy ID
             2 : Agilent ID
@@ -1024,8 +1058,14 @@ def main():
             149 : XenBase Gene ID
             150 : ZFIN ID
 
-    --nb : The number of parrallelized BLAST process (default : 10)
+    --nb-blast : The number of parrallelized BLAST process (default : 10)
     Be carefull, high number will use lot of memory and create a stck overflow !
+
+    --nb-prot : The number of protein per request to the bioDBnet Database:
+    
+                WARNING ! : Too high number of requested cross-refs will occur a slow-mode request 1 by 1.
+                            If it throw an error for 1 request in this mode, the program will ABORT with a
+                            too high number of cross ref choosen exception !
 
     '''))
     parser.add_argument('-pfam',
@@ -1040,7 +1080,8 @@ def main():
                         help='bioDBnet Databases Number: (default : 45 46 47 (GO-TERMs Databases))')
     parser.add_argument('--out', nargs='*', help='File output, default "result.csv"')
     parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true', default=False)
-    parser.add_argument('--nb',help='Number of parrallelized BLAST processes', type=int)
+    parser.add_argument('--nb-blast',help='Number of parrallelized BLAST processes', type=int)
+    parser.add_argument('--nb-prot',help='Number of protein per request to the bioDBnet Database', type=int)
     args = parser.parse_args()
     dicoArgs = vars(args)
     #print(dicoArgs)
@@ -1086,11 +1127,16 @@ python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
     else:
         output = dicoArgs['db']
 
-    if dicoArgs['nb'] is None:
+    if dicoArgs['nb-blast'] is None:
         NB_BLAST_PROCESS = 10
     else:
-        NB_BLAST_PROCESS = dicoArgs['nb']
+        NB_BLAST_PROCESS = dicoArgs['nb-blast']
 
+    if dicoArgs['nb-prot'] is None:
+        NB_PROT_DB = 250
+    else:
+        NB_PROT_DB = dicoArgs['nb-prot']
+        
     if os.path.isdir(os.path.join(os.getcwd(),'TAXONOMY')) == False:
         print("Download the reference genome list")
         init()
@@ -1298,7 +1344,7 @@ python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
     list_of_accession = [i.split('.')[0] for i in df_result['ACCESSION']]
     #get the DB to query
     db_list = bioDBnet_database(biodbnet_db)
-    data = get_biodbnet_data(list_of_accession,db_list)
+    data = get_biodbnet_data(list_of_accession,db_list,NB_PROT_DB)
 
     for column in data:
         dico = { df_result['ACCESSION'][row_index] : data[column][row_index] for row_index in range(len(data[column])) }
