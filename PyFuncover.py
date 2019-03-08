@@ -471,7 +471,7 @@ def bioDBnet_request(l, headers, params, taxid=False):
                 print(r)
                 print('Response content')
                 print(r.text)
-                print('TOO MANY CROSS6REF EXCEPTION :\nThe reccord : {} failed ! Try a smaller number of cross-refs'.format(a))
+                print('TOO MANY CROSS-REF EXCEPTION :\nThe reccord : {} failed ! Try a smaller number of cross-refs'.format(a))
                 print('JOB ABORTED ! Sorry...')
                 exit()
         return json_data_list
