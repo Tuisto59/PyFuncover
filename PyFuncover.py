@@ -901,7 +901,7 @@ def main():
         Default : result.csv
 
     --db : The list of choosen cross-ref number to retrieve data from bioDBnet database :
-            default : 137 45 46 47 (UNIPROT ID, GO-TERMs Databases)
+            default : 137 47 48 49 (UNIPROT ID, GO-TERMs Databases)
 
             WARNING ! : Too high number of requested cross-refs will occur a slow-mode request 1 by 1.
                         If it get an error for 1 request with 1 protein in the mode 1 by 1,
@@ -1074,7 +1074,7 @@ def main():
     parser.add_argument('-taxid',
                         nargs='*',
                         help='The list of TaxID for each organism')
-    parser.add_argument('--db',nargs='*',type=int, help='bioDBnet Databases Number: (default : 47 48 49 (GO-TERMs Databases))', default = [47,48,49])
+    parser.add_argument('--db',nargs='*',type=int, help='bioDBnet Databases Number: (default : 137 47 48 49 (GO-TERMs Databases))', default = [137,47,48,49])
     parser.add_argument('--out', help='File output, default "result.csv"', default = "results.csv")
     parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true', default=False)
     parser.add_argument('--nbblast',help='Number of parrallelized BLAST processes', type=int, default = 10)
