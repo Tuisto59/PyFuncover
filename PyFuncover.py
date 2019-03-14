@@ -907,156 +907,156 @@ def main():
                         If it get an error for 1 request with 1 protein in the mode 1 by 1,
                         the program will ABORT with a too high number of choosen cross-ref choosen exception !
 
-            1 : Affy ID
-            2 : Agilent ID
-            3 : Allergome Code
-            4 : ApiDB_CryptoDB ID
-            5 : Biocarta Pathway Name
-            6 : BioCyc ID
-            7 : CCDS ID
-            8 : Chromosomal Location
-            9 : CleanEx ID
-            10 : CodeLink ID
-            11 : COSMIC ID
-            12 : CPDB Protein Interactor
-            13 : CTD Disease Info
-            14 : CTD Disease Name
-            15 : CYGD ID
-            16 : dbSNP ID
-            17 : dictyBase ID
-            18 : DIP ID
-            19 : DisProt ID
-            20 : DrugBank Drug ID
-            21 : DrugBank Drug Info
-            22 : DrugBank Drug Name
-            23 : EC Number
-            24 : EchoBASE ID
-            25 : EcoGene ID
-            26 : Ensembl Biotype
-            27 : Ensembl Gene ID
-            28 : Ensembl Gene Info
-            29 : Ensembl Protein ID
-            30 : Ensembl Transcript ID
-            31 : FlyBase Gene ID
-            32 : FlyBase Protein ID
-            33 : FlyBase Transcript ID
-            34 : GAD Disease Info
-            35 : GAD Disease Name
-            36 : GenBank Nucleotide Accession
-            37 : GenBank Nucleotide GI
-            38 : GenBank Protein Accession
-            39 : GenBank Protein GI
-            40 : Gene ID
-            41 : Gene Info
-            42 : Gene Symbol
-            43 : Gene Symbol and Synonyms
-            44 : Gene Symbol ORF
-            45 : Gene Synonyms
-            46 : GeneFarm ID
-            47 : GO - Biological Process
-            48 : GO - Cellular Component
-            49 : GO - Molecular Function
-            50 : GO ID
-            51 : GSEA Standard Name
-            52 : H-Inv Locus ID
-            53 : HAMAP ID
-            54 : HGNC ID
-            55 : HMDB Metabolite
-            56 : Homolog - All Ens Gene ID
-            57 : Homolog - All Ens Protein ID
-            58 : Homolog - All Gene ID
-            59 : Homolog - Human Ens Gene ID
-            60 : Homolog - Human Ens Protein ID
-            61 : Homolog - Human Gene ID
-            62 : Homolog - Mouse Ens Gene ID
-            63 : Homolog - Mouse Ens Protein ID
-            64 : Homolog - Mouse Gene ID
-            65 : Homolog - Rat Ens Gene ID
-            66 : Homolog - Rat Ens Protein ID
-            67 : Homolog - Rat Gene ID
-            68 : HomoloGene ID
-            69 : HPA ID
-            70 : HPRD ID
-            71 : HPRD Protein Complex
-            72 : HPRD Protein Interactor
-            73 : Illumina ID
-            74 : IMGT/GENE-DB ID
-            75 : InterPro ID
-            76 : IPI ID
-            77 : KEGG Disease ID
-            78 : KEGG Gene ID
-            79 : KEGG Orthology ID
-            80 : KEGG Pathway ID
-            81 : KEGG Pathway Info
-            82 : KEGG Pathway Title
-            83 : LegioList ID
-            84 : Leproma ID
-            85 : Locus Tag
-            86 : MaizeGDB ID
-            87 : MEROPS ID
-            88 : MGC(ZGC/XGC) ID
-            89 : MGC(ZGC/XGC) Image ID
-            90 : MGC(ZGC/XGC) Info
-            91 : MGI ID
-            92 : MIM ID
-            93 : MIM Info
-            94 : miRBase ID
-            95 : NCIPID Pathway Name
-            96 : NCIPID Protein Complex
-            97 : NCIPID Protein Interactor
-            98 : NCIPID PTM
-            99 : Orphanet ID
-            100 : PANTHER ID
-            101 : Paralog - Ens Gene ID
-            102 : PBR ID
-            103 : PDB ID
-            104 : PeroxiBase ID
-            105 : Pfam ID
-            106 : PharmGKB Drug Info
-            107 : PharmGKB Gene ID
-            108 : PIR ID
-            109 : PIRSF ID
-            110 : PptaseDB ID
-            111 : PRINTS ID
-            112 : ProDom ID
-            113 : PROSITE ID
-            114 : PseudoCAP ID
-            115 : PubMed ID
-            116 : Reactome ID
-            117 : Reactome Pathway Name
-            118 : REBASE ID
-            119 : RefSeq Genomic Accession
-            120 : RefSeq Genomic GI
-            121 : RefSeq mRNA Accession
-            122 : RefSeq ncRNA Accession
-            123 : RefSeq Nucleotide GI
-            124 : RefSeq Protein Accession
-            125 : RefSeq Protein GI
-            126 : Rfam ID
-            127 : RGD ID
-            128 : SGD ID
-            129 : SMART ID
-            130 : STRING Protein Interactor
-            131 : TAIR ID
-            132 : Taxon ID
-            133 : TCDB ID
-            134 : TIGRFAMs ID
-            135 : TubercuList ID
-            136 : UCSC ID
-            137 : UniGene ID
-            138 : UniProt Accession
-            139 : UniProt Entry Name
-            140 : UniProt Info
-            141 : UniProt Protein Name
-            142 : UniSTS ID
-            143 : VectorBase Gene ID
-            144 : VEGA Gene ID
-            145 : VEGA Protein ID
-            146 : VEGA Transcript ID
-            147 : WormBase Gene ID
-            148 : WormPep Protein ID
-            149 : XenBase Gene ID
-            150 : ZFIN ID
+        1 : 'Affy ID',
+        2 : 'Agilent ID',
+        3 : 'Allergome Code',
+        4 : 'ApiDB_CryptoDB ID',
+        5 : 'Biocarta Pathway Name',
+        6 : 'BioCyc ID',
+        7 : 'CCDS ID',
+        8 : 'Chromosomal Location',
+        9 : 'CleanEx ID',
+        10 : 'CodeLink ID',
+        11 : 'COSMIC ID',
+        12 : 'CPDB Protein Interactor',
+        13 : 'CTD Disease Info',
+        14 : 'CTD Disease Name',
+        15 : 'CYGD ID',
+        16 : 'dbSNP ID',
+        17 : 'dictyBase ID',
+        18 : 'DIP ID',
+        19 : 'DisProt ID',
+        20 : 'DrugBank Drug ID',
+        21 : 'DrugBank Drug Info',
+        22 : 'DrugBank Drug Name',
+        23 : 'EC Number',
+        24 : 'EchoBASE ID',
+        25 : 'EcoGene ID',
+        26 : 'Ensembl Biotype',
+        27 : 'Ensembl Gene ID',
+        28 : 'Ensembl Gene Info',
+        29 : 'Ensembl Protein ID',
+        30 : 'Ensembl Transcript ID',
+        31 : 'FlyBase Gene ID',
+        32 : 'FlyBase Protein ID',
+        33 : 'FlyBase Transcript ID',
+        34 : 'GAD Disease Info',
+        35 : 'GAD Disease Name',
+        36 : 'GenBank Nucleotide Accession',
+        37 : 'GenBank Nucleotide GI',
+        38 : 'GenBank Protein Accession',
+        39 : 'GenBank Protein GI',
+        40 : 'Gene ID',
+        41 : 'Gene Info',
+        42 : 'Gene Symbol',
+        43 : 'Gene Symbol and Synonyms',
+        44 : 'Gene Symbol ORF',
+        45 : 'Gene Synonyms',
+        46 : 'GeneFarm ID',
+        47 : 'GO - Biological Process',
+        48 : 'GO - Cellular Component',
+        49 : 'GO - Molecular Function',
+        50 : 'GO ID',
+        51 : 'GSEA Standard Name',
+        52 : 'H-Inv Locus ID',
+        53 : 'HAMAP ID',
+        54 : 'HGNC ID',
+        55 : 'HMDB Metabolite',
+        56 : 'Homolog - All Ens Gene ID',
+        57 : 'Homolog - All Ens Protein ID',
+        58 : 'Homolog - All Gene ID',
+        59 : 'Homolog - Human Ens Gene ID',
+        60 : 'Homolog - Human Ens Protein ID',
+        61 : 'Homolog - Human Gene ID',
+        62 : 'Homolog - Mouse Ens Gene ID',
+        63 : 'Homolog - Mouse Ens Protein ID',
+        64 : 'Homolog - Mouse Gene ID',
+        65 : 'Homolog - Rat Ens Gene ID',
+        66 : 'Homolog - Rat Ens Protein ID',
+        67 : 'Homolog - Rat Gene ID',
+        68 : 'HomoloGene ID',
+        69 : 'HPA ID',
+        70 : 'HPRD ID',
+        71 : 'HPRD Protein Complex',
+        72 : 'HPRD Protein Interactor',
+        73 : 'Illumina ID',
+        74 : 'IMGT/GENE-DB ID',
+        75 : 'InterPro ID',
+        76 : 'IPI ID',
+        77 : 'KEGG Disease ID',
+        78 : 'KEGG Gene ID',
+        79 : 'KEGG Orthology ID',
+        80 : 'KEGG Pathway ID',
+        81 : 'KEGG Pathway Info',
+        82 : 'KEGG Pathway Title',
+        83 : 'LegioList ID',
+        84 : 'Leproma ID',
+        85 : 'Locus Tag',
+        86 : 'MaizeGDB ID',
+        87 : 'MEROPS ID',
+        88 : 'MGC(ZGC/XGC) ID',
+        89 : 'MGC(ZGC/XGC) Image ID',
+        90 : 'MGC(ZGC/XGC) Info',
+        91 : 'MGI ID',
+        92 : 'MIM ID',
+        93 : 'MIM Info',
+        94 : 'miRBase ID',
+        95 : 'NCIPID Pathway Name',
+        96 : 'NCIPID Protein Complex',
+        97 : 'NCIPID Protein Interactor',
+        98 : 'NCIPID PTM',
+        99 : 'Orphanet ID',
+        100 : 'PANTHER ID',
+        101 : 'Paralog - Ens Gene ID',
+        102 : 'PBR ID',
+        103 : 'PDB ID',
+        104 : 'PeroxiBase ID',
+        105 : 'Pfam ID',
+        106 : 'PharmGKB Drug Info',
+        107 : 'PharmGKB Gene ID',
+        108 : 'PIR ID',
+        109 : 'PIRSF ID',
+        110 : 'PptaseDB ID',
+        111 : 'PRINTS ID',
+        112 : 'ProDom ID',
+        113 : 'PROSITE ID',
+        114 : 'PseudoCAP ID',
+        115 : 'PubMed ID',
+        116 : 'Reactome ID',
+        117 : 'Reactome Pathway Name',
+        118 : 'REBASE ID',
+        119 : 'RefSeq Genomic Accession',
+        120 : 'RefSeq Genomic GI',
+        121 : 'RefSeq mRNA Accession',
+        122 : 'RefSeq ncRNA Accession',
+        123 : 'RefSeq Nucleotide GI',
+        124 : 'RefSeq Protein Accession',
+        125 : 'RefSeq Protein GI',
+        126 : 'Rfam ID',
+        127 : 'RGD ID',
+        128 : 'SGD ID',
+        129 : 'SMART ID',
+        130 : 'STRING Protein Interactor',
+        131 : 'TAIR ID',
+        132 : 'Taxon ID',
+        133 : 'TCDB ID',
+        134 : 'TIGRFAMs ID',
+        135 : 'TubercuList ID',
+        136 : 'UCSC ID',
+        137 : 'UniGene ID',
+        138 : 'UniProt Accession',
+        139 : 'UniProt Entry Name',
+        140 : 'UniProt Info',
+        141 : 'UniProt Protein Name',
+        142 : 'UniSTS ID',
+        143 : 'VectorBase Gene ID',
+        144 : 'VEGA Gene ID',
+        145 : 'VEGA Protein ID',
+        146 : 'VEGA Transcript ID',
+        147 : 'WormBase Gene ID',
+        148 : 'WormPep Protein ID',
+        149 : 'XenBase Gene ID',
+        150 : 'ZFIN ID'
 
     --nb-blast : The number of parrallelized BLAST process (default : 10)
     Be carefull, high number will use lot of memory and create a stck overflow !
@@ -1074,17 +1074,15 @@ def main():
     parser.add_argument('-taxid',
                         nargs='*',
                         help='The list of TaxID for each organism')
-    parser.add_argument('--db',
-                        nargs='*',
-                        type=int,
-                        help='bioDBnet Databases Number: (default : 45 46 47 (GO-TERMs Databases))')
-    parser.add_argument('--out', nargs='*', help='File output, default "result.csv"')
+    parser.add_argument('--db',nargs='*',type=int, help='bioDBnet Databases Number: (default : 47 48 49 (GO-TERMs Databases))', default = [47,48,49])
+    parser.add_argument('--out', help='File output, default "result.csv"', default = "results.csv")
     parser.add_argument('--update',help='Update the NCBI Taxonomic Database and the Prokaryote, Eukaryote & RefSeq genome assembly', action='store_true', default=False)
-    parser.add_argument('--nbblast',help='Number of parrallelized BLAST processes', type=int)
-    parser.add_argument('--nbprot',help='Number of protein per request to the bioDBnet Database', type=int)
+    parser.add_argument('--nbblast',help='Number of parrallelized BLAST processes', type=int, default = 10)
+    parser.add_argument('--nbprot',help='Number of protein per request to the bioDBnet Database', type=int, default = 250)
     args = parser.parse_args()
     dicoArgs = vars(args)
-    #print(dicoArgs)
+    print("Args :")
+    print(dicoArgs)
 
 
     if not len(sys.argv) > 1:
@@ -1117,25 +1115,10 @@ python PyFuncover.py -taxid [TAXID] -pfam [PFAM]''')
     else:
         pfam = dicoArgs['pfam']
         
-    if dicoArgs['db'] is None:
-        biodbnet_db = [47,48,49]
-    else:
-        biodbnet_db = dicoArgs['db']
-
-    if dicoArgs['out'] is None:
-        output = 'results.csv'
-    else:
-        output = dicoArgs['db']
-
-    if dicoArgs['nbblast'] is None:
-        NB_BLAST_PROCESS = 10
-    else:
-        NB_BLAST_PROCESS = dicoArgs['nbblast']
-
-    if dicoArgs['nbprot'] is None:
-        NB_PROT_DB = 250
-    else:
-        NB_PROT_DB = dicoArgs['nbprot']
+    biodbnet_db = dicoArgs['db']
+    output = dicoArgs['out']
+    NB_BLAST_PROCESS = dicoArgs['nbblast']
+    NB_PROT_DB = dicoArgs['nbprot']
         
     if os.path.isdir(os.path.join(os.getcwd(),'TAXONOMY')) == False:
         print("Download the reference genome list")
